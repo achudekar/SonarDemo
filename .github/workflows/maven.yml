@@ -4,6 +4,8 @@ on:
     branches:
       - main
       - develop
+      - pr-source
+      - pr-destination
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
