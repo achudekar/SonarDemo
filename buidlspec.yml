@@ -18,3 +18,4 @@ phases:
       - echo Postgres is ready
       - echo Test started on `date`
       - mvn -s settings.xml verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=inter-sonardemo
+      
