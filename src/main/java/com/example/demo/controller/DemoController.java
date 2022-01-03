@@ -14,7 +14,7 @@ public class DemoController {
 	@GetMapping("/")
 	private List<DemoDto> getDemoJSON() {
 		List<DemoDto> demoDtos = new ArrayList<>();
-		
+		System.out.println("Hello");
 		for(int i = 0; i < 100 ; i++) {
 			DemoDto demoDto = new DemoDto();
 			demoDto.setElementName("Element");
