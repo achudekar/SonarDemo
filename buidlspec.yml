@@ -18,9 +18,10 @@ phases:
 #       - echo Postgres is ready
 #       - echo Test started on `date`
       - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=$PROJECT_KEY --log-file log.txt
+      - aws sns publish --topic-arn $SNS_TOPIC_ARN --message "$(tail -10 log.txt)"
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY >result.json
       - cat result.json
       - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
       - tail -10 log.txt
-      - aws sns publish --topic-arn $SNS_TOPIC_ARN --message "$(tail -10 log.txt)"
+      
