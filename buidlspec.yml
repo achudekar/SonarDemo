@@ -20,7 +20,7 @@ phases:
       - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=$PROJECT_KEY --log-file log.txt
       - sleep 5
       - curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY >result.json
-      - aws sns publish --topic-arn $SNS_TOPIC_ARN --message "$(tail -10 log.txt)" --subject "$(jq -r '.projectStatus.status' result.json)"+" : SonarCloud Analysis Result"
+      - aws sns publish --topic-arn $SNS_TOPIC_ARN --message "$(tail -10 log.txt)" --subject "$(jq -r '.projectStatus.status' result.json)"+" - SonarCloud Analysis Result"
       - cat result.json
       - if [ $(jq -r '.projectStatus.status' result.json) = ERROR ] ; then $CODEBUILD_BUILD_SUCCEEDING -eq 0 ;fi
       - tail -10 log.txt
