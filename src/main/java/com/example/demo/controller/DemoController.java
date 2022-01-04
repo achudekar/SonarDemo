@@ -24,5 +24,12 @@ public class DemoController {
 		
 		return demoDtos;
 	}
+	
+	@RequestMapping(value = "/abc")
+	public void index(HttpServletResponse res, String value) {
+    		res.setHeader("Set-Cookie", value);
+    		Cookie cookie = new Cookie("jsessionid", value);
+		res.addCookie(cookie);
+	}
 
 }
