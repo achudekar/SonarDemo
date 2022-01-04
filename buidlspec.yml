@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - apt update && apt install -y postgresql-client
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain interprefy --domain-owner 046207729747 --query authorizationToken --output text`
+      - echo Print all env vars
+      - printenv
+      - echo Starting postgres
+      - docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:11
+      - while ! pg_isready -h localhost; do sleep 5; done
+      - echo Postgres is ready
+      - echo Test started on `date`
+      - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=achudekar_SonarDemo
