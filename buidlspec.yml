@@ -18,4 +18,4 @@ phases:
       - echo Postgres is ready
       - echo Test started on `date`
       - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=inter-sonardemo --log-file log.txt
-      - tail -4 log.txt
+      - tail -10 log.txt
