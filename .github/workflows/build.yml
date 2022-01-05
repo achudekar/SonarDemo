@@ -2,7 +2,9 @@ name: Build
 on:
   push:
     branches:
+      - main
       - pr-source
+      - pr-destination
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
